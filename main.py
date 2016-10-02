@@ -21,6 +21,7 @@ def gather_info(name, url):
 def create_report(name, full_url, ip_address, domain_name, nmap, robots_txt, whois):
     print("Creating report")
     project_dir = ROOT_DIR + '/' + name
+    # get_robots_txt(project_dir,full_url)
     general.create_dir(project_dir)
     general.write_file(project_dir + '/full_url.txt', full_url)
     general.write_file(project_dir + '/domain_name.txt', domain_name)
@@ -28,6 +29,17 @@ def create_report(name, full_url, ip_address, domain_name, nmap, robots_txt, who
     general.write_file(project_dir + '/nmap.txt', nmap)
     general.write_file(project_dir + '/robots.txt', robots_txt)
     general.write_file(project_dir + '/whois.txt', whois)
+
+def download_file(path,url):
+    try:
+        r = urllib2.urlopen(url)
+        f = open(path+'/'+url.split('/')[-1].split('#')[0].split('?')[0],'w')
+        f.write(r.read())
+        f.close()
+    except Exception,err:
+        print Exception,err
+
+
 
 
 gather_info('google.com', 'https://www.google.com/')
